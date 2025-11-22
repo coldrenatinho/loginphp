@@ -6,6 +6,7 @@ services:
     ports:
       - "4306:3306"
     volumes:
+      - ./scripts:/docker-entrypoint-initdb.d
       - mysqldata:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -16,14 +17,10 @@ services:
   phpmyadmin:
     depends_on:
       - mysql
-    # Use a specific known-working tag rather than `latest` to avoid corrupted/unstable images
-    image: phpmyadmin/phpmyadmin:5.2.0
+    image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin_login_php
     restart: unless-stopped
     ports:
-      - "8080:80"
-    environment:
-      # connect phpMyAdmin to the mysql service defined above
-      PMA_HOST: mysql
+      - "8089:80"
 volumes:
   mysqldata:
