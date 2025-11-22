@@ -1,0 +1,56 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# PHP / Composer
+/vendor/
+composer.phar
+/.phpunit.result.cache
+
+# Environment files (ignore .env and any env variants)
+.env
+.env.*
+.env.local
+*.env.php
+
+# Application data / caches / logs
+/logs
+*.log
+cache/
+tmp/
+temp/
+var/
+bootstrap/cache/*
+storage/
+storage/*.key
+
+# Node / front-end
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs / Editors
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Databases
+*.sqlite
+*.sqlite3
+*.db
+
+# Certificates / Keys
+*.pem
+*.key
+
+# Uploads / user data
+uploads/
+public/uploads/
+private/
+
+# Compiled / generated
+*.class
+*.cache
+*.compiled
