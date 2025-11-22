@@ -1,25 +1,29 @@
 services:
- db:
-   image: mysql:latest
-   container_name: mysql
-   restart: unless-stopped
-   ports:
-     - "4306:3306"
-   volumes:
-     - mysqldata:/var/lib/mysql
-   environment:
-     MYSQL_ROOT_PASSWORD: rootpassword
-     MYSQL_DATABASE: login
-     MYSQL_USER: user
-     MYSQL_PASSWORD: userpassword
- phpmyadmin:
-   image: phpmyadmin/phpmyadmin
-   container_name: phpmyadmin
-   restart: unless-stopped
-   ports:
-     - "8082:80"
-   environment:
-     PMA_HOST: db
-     PMA_PORT: 3306
+  mysql:
+    image: mysql:latest
+    container_name: mysql_login_php
+    restart: unless-stopped
+    ports:
+      - "4306:3306"
+    volumes:
+      - mysqldata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: login
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+
+  phpmyadmin:
+    depends_on:
+      - mysql
+    # Use a specific known-working tag rather than `latest` to avoid corrupted/unstable images
+    image: phpmyadmin/phpmyadmin:5.2.0
+    container_name: phpmyadmin_login_php
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      # connect phpMyAdmin to the mysql service defined above
+      PMA_HOST: mysql
 volumes:
- mysqldata:
+  mysqldata:
