@@ -13,3 +13,5 @@ GRANT ALL PRIVILEGES ON `phpmyadmin`.* TO 'pma'@'%';
 GRANT USAGE ON *.* TO 'pma'@'%';
 
 FLUSH PRIVILEGES;
+
+COMMIT;
