@@ -19,8 +19,7 @@ if (isset($_POST['email']) && !empty($_POST['email'])) {
     if ($total == 0 ) {
         $erro[] = "Email não cadastrado.";
     } else {
-        // Use password_verify for secure password checking
-        if($_POST['senha'] == $dado['senha']) {
+        if (password_verify($_POST['senha'], $dado['senha'])) {
             $_SESSION['usuario'] = $dado['id'];
         } else{
             $erro[] = "Senha inválida.";
