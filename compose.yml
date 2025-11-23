@@ -19,6 +19,7 @@ services:
     depends_on:
       - php
 
+  # Iniciar o serviço MySQL e injetar scripts de inicialização
   mysql:
     image: mysql:8.0
     container_name: mysql_login_php
