@@ -263,6 +263,51 @@ $nome = $is_logged ? $_SESSION['nome'] : '';
             </div>
         </div>
 
+        <!-- Contato -->
+        <div class="card shadow-sm border-0 mb-5">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0"><i class="fas fa-envelope me-2"></i>Contato</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="text-center">
+                            <i class="fab fa-youtube fa-3x text-danger mb-2"></i>
+                            <h6 class="font-weight-bold">YouTube</h6>
+                            <a href="https://www.youtube.com/@coldrenatinho" target="_blank" class="btn btn-sm btn-outline-danger">
+                                <i class="fab fa-youtube me-1"></i>@coldrenatinho
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="text-center">
+                            <i class="fab fa-instagram fa-3x mb-2" style="color: #E4405F;"></i>
+                            <h6 class="font-weight-bold">Instagram</h6>
+                            <a href="https://www.instagram.com/renato.gcc/" target="_blank" class="btn btn-sm btn-outline-dark">
+                                <i class="fab fa-instagram me-1"></i>@renato.gcc
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <i class="fas fa-envelope fa-3x text-primary mb-2"></i>
+                            <h6 class="font-weight-bold">Email</h6>
+                            <a href="mailto:araujorenato045@gmail.com" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-envelope me-1"></i>Enviar Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="text-center">
+                    <p class="mb-2"><strong>Desenvolvido por:</strong> Renato Araújo</p>
+                    <p class="text-muted mb-0">
+                        <small>Entre em contato para dúvidas, sugestões ou colaborações!</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <!-- CTA -->
         <div class="text-center mb-5">
             <?php if (!$is_logged): ?>
@@ -282,11 +327,39 @@ $nome = $is_logged ? $_SESSION['nome'] : '';
 
     <!-- Footer -->
     <footer class="footer mt-5 py-4 bg-light">
-        <div class="container text-center">
-            <p class="mb-2">&copy; <?php echo date('Y'); ?> Sistema de Login PHP. Todos os direitos reservados.</p>
-            <p class="mb-0 text-muted">
-                <small>Desenvolvido com <i class="fas fa-heart text-danger"></i> por Renato</small>
-            </p>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+                    <p class="mb-1">&copy; <?php echo date('Y'); ?> Sistema de Login PHP</p>
+                    <p class="mb-0 text-muted">
+                        <small>Desenvolvido com <i class="fas fa-heart text-danger"></i> por Renato Araújo</small>
+                    </p>
+                </div>
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <p class="mb-1"><strong>Contatos:</strong></p>
+                    <p class="mb-0">
+                        <a href="https://www.youtube.com/@coldrenatinho" target="_blank" class="text-decoration-none me-2" title="YouTube">
+                            <i class="fab fa-youtube text-danger"></i>
+                        </a>
+                        <a href="https://www.instagram.com/renato.gcc/" target="_blank" class="text-decoration-none me-2" title="Instagram">
+                            <i class="fab fa-instagram" style="color: #E4405F;"></i>
+                        </a>
+                        <a href="mailto:araujorenato045@gmail.com" class="text-decoration-none" title="Email">
+                            <i class="fas fa-envelope text-primary"></i>
+                        </a>
+                    </p>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <p class="mb-1">
+                        <a href="https://github.com/coldrenatinho/loginphp" target="_blank" class="text-decoration-none">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </p>
+                    <p class="mb-0 text-muted">
+                        <small>Licença MIT</small>
+                    </p>
+                </div>
+            </div>
         </div>
     </footer>
 

@@ -365,12 +365,21 @@ docker-compose up -d
 
 ## 👨‍💻 Desenvolvedor
 
+**Renato Araújo**
+
 Projeto desenvolvido como trabalho acadêmico para demonstrar conhecimentos em:
 - Desenvolvimento Web Full Stack
 - PHP e MySQL
 - Segurança em Aplicações Web
 - Design Responsivo
 - Boas Práticas de Programação
+
+### 📱 Contatos
+
+- 📧 Email: [araujorenato045@gmail.com](mailto:araujorenato045@gmail.com)
+- 🎥 YouTube: [@coldrenatinho](https://www.youtube.com/@coldrenatinho)
+- 📸 Instagram: [@renato.gcc](https://www.instagram.com/renato.gcc/)
+- 💻 GitHub: [coldrenatinho](https://github.com/coldrenatinho)
 
 ---
 

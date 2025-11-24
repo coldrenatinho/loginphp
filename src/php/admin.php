@@ -299,19 +299,34 @@ $link->close();
     <!-- Footer -->
     <footer class="footer mt-4 py-3 bg-light">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center text-md-start mb-2 mb-md-0">
                     <p class="mb-0 text-muted">
-                        <small>&copy; <?php echo date('Y'); ?> Sistema de Login PHP. Todos os direitos reservados.</small>
+                        <small>&copy; <?php echo date('Y'); ?> Sistema de Login PHP</small>
                     </p>
                 </div>
-                <div class="col-md-6 text-center text-md-end">
+                <div class="col-md-4 text-center mb-2 mb-md-0">
                     <p class="mb-0">
                         <small class="text-muted">
-                            <a href="sobre.php" class="text-decoration-none">Sobre</a> | 
-                            <a href="https://github.com/coldrenatinho/loginphp" target="_blank" class="text-decoration-none">
-                                <i class="fab fa-github"></i> GitHub
+                            <a href="https://www.youtube.com/@coldrenatinho" target="_blank" class="text-decoration-none me-2" title="YouTube">
+                                <i class="fab fa-youtube text-danger"></i>
                             </a>
+                            <a href="https://www.instagram.com/renato.gcc/" target="_blank" class="text-decoration-none me-2" title="Instagram">
+                                <i class="fab fa-instagram" style="color: #E4405F;"></i>
+                            </a>
+                            <a href="mailto:araujorenato045@gmail.com" class="text-decoration-none me-2" title="Email">
+                                <i class="fas fa-envelope text-primary"></i>
+                            </a>
+                            <a href="https://github.com/coldrenatinho/loginphp" target="_blank" class="text-decoration-none" title="GitHub">
+                                <i class="fab fa-github text-dark"></i>
+                            </a>
+                        </small>
+                    </p>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <p class="mb-0">
+                        <small class="text-muted">
+                            <a href="sobre.php" class="text-decoration-none">Sobre</a>
                         </small>
                     </p>
                 </div>

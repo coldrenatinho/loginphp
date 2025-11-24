@@ -199,7 +199,14 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👨‍💻 Autor
 
-Desenvolvido por [Renato](https://github.com/coldrenatinho)
+**Renato Araújo**
+
+### 📱 Contatos
+
+- 📧 Email: [araujorenato045@gmail.com](mailto:araujorenato045@gmail.com)
+- 🎥 YouTube: [@coldrenatinho](https://www.youtube.com/@coldrenatinho)
+- 📸 Instagram: [@renato.gcc](https://www.instagram.com/renato.gcc/)
+- 💻 GitHub: [coldrenatinho](https://github.com/coldrenatinho)
 
 ---
 

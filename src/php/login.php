@@ -159,6 +159,19 @@ $link->close();
         <!-- Footer -->
         <div class="footer mt-3">
             <p class="mb-0">&copy; <?php echo date('Y'); ?> Sistema de Login. Todos os direitos reservados.</p>
+            <p class="mb-0 mt-2">
+                <small>
+                    <a href="https://www.youtube.com/@coldrenatinho" target="_blank" class="text-decoration-none me-2" title="YouTube">
+                        <i class="fab fa-youtube text-danger"></i>
+                    </a>
+                    <a href="https://www.instagram.com/renato.gcc/" target="_blank" class="text-decoration-none me-2" title="Instagram">
+                        <i class="fab fa-instagram" style="color: #E4405F;"></i>
+                    </a>
+                    <a href="mailto:araujorenato045@gmail.com" class="text-decoration-none" title="Email">
+                        <i class="fas fa-envelope text-primary"></i>
+                    </a>
+                </small>
+            </p>
         </div>
     </div>
 
