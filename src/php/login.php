@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Se não houver erros, prossegue com a autenticação
     if (count($erro) == 0) {
         // Usa prepared statement para maior segurança
-        $sql_code = "SELECT id, nome, senha, nivel_acesso FROM usuarios WHERE email = ?";
+        $sql_code = "SELECT id, nome, senha, nivel_acesso, bloqueado, motivo_bloqueio FROM usuarios WHERE email = ?";
         $stmt = $link->prepare($sql_code);
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -47,22 +47,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $erro[] = "Email não cadastrado.";
         } else {
             // Vincula os resultados
-            $stmt->bind_result($id, $nome, $senha_hash, $nivel_acesso);
+            $stmt->bind_result($id, $nome, $senha_hash, $nivel_acesso, $bloqueado, $motivo_bloqueio);
             $stmt->fetch();
 
-            // Verifica a senha usando password_verify
-            if (password_verify($senha, $senha_hash)) {
-                // Senha correta - cria a sessão do usuário
-                $_SESSION['usuario'] = $id;
-                $_SESSION['nome'] = $nome;
-                $_SESSION['email'] = $email;
-                $_SESSION['nivel_acesso'] = $nivel_acesso;
-
-                // Redireciona para a página protegida
-                header("Location: admin.php");
-                exit();
+            // Verifica se o usuário está bloqueado
+            if ($bloqueado == 1) {
+                $erro[] = "bloqueado"; // Flag especial para mostrar modal
+                $erro[] = $motivo_bloqueio ?: "Seu acesso foi bloqueado. Entre em contato com o administrador.";
             } else {
-                $erro[] = "Senha inválida.";
+                // Verifica a senha usando password_verify
+                if (password_verify($senha, $senha_hash)) {
+                    // Coleta informações de auditoria
+                    $ip_origem = $_SERVER['REMOTE_ADDR'] ?? 'Desconhecido';
+                    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+                    
+                    // Extrai informações do User Agent
+                    $sistema_operacional = '';
+                    $dispositivo = 'Desktop';
+                    
+                    if (stripos($user_agent, 'Windows') !== false) {
+                        $sistema_operacional = 'Windows';
+                    } elseif (stripos($user_agent, 'Mac') !== false) {
+                        $sistema_operacional = 'macOS';
+                    } elseif (stripos($user_agent, 'Linux') !== false) {
+                        $sistema_operacional = 'Linux';
+                    } elseif (stripos($user_agent, 'Android') !== false) {
+                        $sistema_operacional = 'Android';
+                        $dispositivo = 'Mobile';
+                    } elseif (stripos($user_agent, 'iOS') !== false || stripos($user_agent, 'iPhone') !== false || stripos($user_agent, 'iPad') !== false) {
+                        $sistema_operacional = 'iOS';
+                        $dispositivo = stripos($user_agent, 'iPad') !== false ? 'Tablet' : 'Mobile';
+                    }
+                    
+                    if (stripos($user_agent, 'Mobile') !== false && $dispositivo == 'Desktop') {
+                        $dispositivo = 'Mobile';
+                    } elseif (stripos($user_agent, 'Tablet') !== false) {
+                        $dispositivo = 'Tablet';
+                    }
+                    
+                    // Registra o login na auditoria
+                    $sql_auditoria = "INSERT INTO auditoria_login (usuario_id, ip_origem, navegador, sistema_operacional, dispositivo, sucesso) VALUES (?, ?, ?, ?, ?, 1)";
+                    $stmt_auditoria = $link->prepare($sql_auditoria);
+                    $stmt_auditoria->bind_param("issss", $id, $ip_origem, $user_agent, $sistema_operacional, $dispositivo);
+                    $stmt_auditoria->execute();
+                    $stmt_auditoria->close();
+                    
+                    // Senha correta - cria a sessão do usuário
+                    $_SESSION['usuario'] = $id;
+                    $_SESSION['nome'] = $nome;
+                    $_SESSION['email'] = $email;
+                    $_SESSION['nivel_acesso'] = $nivel_acesso;
+
+                    // Redireciona para a página protegida
+                    header("Location: admin.php");
+                    exit();
+                } else {
+                    $erro[] = "Senha inválida.";
+                }
             }
         }
         $stmt->close();
@@ -97,13 +138,15 @@ $link->close();
             </div>
             <div class="card-body">
                 <!-- Exibição de Mensagens de Erro -->
-                <?php if (count($erro) > 0): ?>
+                <?php if (count($erro) > 0 && $erro[0] !== 'bloqueado'): ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <i class="fas fa-exclamation-circle me-2"></i>
                     <strong>Erro!</strong>
                     <ul class="mb-0 mt-2">
                         <?php foreach ($erro as $msg): ?>
+                        <?php if ($msg !== 'bloqueado'): ?>
                         <li><?php echo htmlspecialchars($msg); ?></li>
+                        <?php endif; ?>
                         <?php endforeach; ?>
                     </ul>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -174,6 +217,40 @@ $link->close();
             </p>
         </div>
     </div>
+
+    <!-- Modal de Usuário Bloqueado -->
+    <?php if (count($erro) > 0 && $erro[0] === 'bloqueado'): ?>
+    <div class="modal fade show" id="modalBloqueado" tabindex="-1" style="display: block; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-danger">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-ban me-2"></i>Acesso Bloqueado
+                    </h5>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="fas fa-user-lock fa-4x text-danger mb-3"></i>
+                    <h5 class="mb-3">Seu acesso foi bloqueado</h5>
+                    <p class="text-muted mb-4">
+                        <?php echo htmlspecialchars($erro[1] ?? 'Entre em contato com o administrador para mais informações.'); ?>
+                    </p>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Entre em contato:</strong><br>
+                        <a href="mailto:araujorenato045@gmail.com" class="text-decoration-none">
+                            <i class="fas fa-envelope me-1"></i>araujorenato045@gmail.com
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.reload()">
+                        <i class="fas fa-arrow-left me-1"></i>Voltar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

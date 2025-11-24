@@ -17,6 +17,37 @@ if ($_SESSION['nivel_acesso'] !== 'admin') {
     exit();
 }
 
+// Processa ações de bloqueio/desbloqueio
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao']) && isset($_POST['usuario_id'])) {
+    $usuario_id = (int)$_POST['usuario_id'];
+    $acao = $_POST['acao'];
+    
+    if ($acao === 'bloquear' && isset($_POST['motivo'])) {
+        $motivo = trim($_POST['motivo']);
+        $sql_bloquear = "UPDATE usuarios SET bloqueado = 1, motivo_bloqueio = ? WHERE id = ? AND id != ?";
+        $stmt_bloquear = $link->prepare($sql_bloquear);
+        $admin_id = $_SESSION['usuario'];
+        $stmt_bloquear->bind_param("sii", $motivo, $usuario_id, $admin_id);
+        $stmt_bloquear->execute();
+        $stmt_bloquear->close();
+        
+        $_SESSION['mensagem'] = "Usuário bloqueado com sucesso!";
+        $_SESSION['tipo_mensagem'] = "success";
+    } elseif ($acao === 'desbloquear') {
+        $sql_desbloquear = "UPDATE usuarios SET bloqueado = 0, motivo_bloqueio = NULL WHERE id = ?";
+        $stmt_desbloquear = $link->prepare($sql_desbloquear);
+        $stmt_desbloquear->bind_param("i", $usuario_id);
+        $stmt_desbloquear->execute();
+        $stmt_desbloquear->close();
+        
+        $_SESSION['mensagem'] = "Usuário desbloqueado com sucesso!";
+        $_SESSION['tipo_mensagem'] = "success";
+    }
+    
+    header("Location: usuarios.php");
+    exit();
+}
+
 $nome = $_SESSION['nome'];
 
 // Paginação
@@ -69,7 +100,7 @@ if (!empty($params)) {
 $total_paginas = ceil($total_usuarios / $por_pagina);
 
 // Busca os usuários
-$sql = "SELECT id, nome, sobrenome, email, sexo, nivel_acesso, data_cadastro 
+$sql = "SELECT id, nome, sobrenome, email, sexo, nivel_acesso, bloqueado, motivo_bloqueio, data_cadastro 
         FROM usuarios {$where_clause} 
         ORDER BY data_cadastro DESC 
         LIMIT {$por_pagina} OFFSET {$offset}";
@@ -166,6 +197,19 @@ $link->close();
             </ol>
         </nav>
 
+        <!-- Mensagem de Sucesso -->
+        <?php if (isset($_SESSION['mensagem'])): ?>
+        <div class="alert alert-<?php echo $_SESSION['tipo_mensagem']; ?> alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <?php 
+            echo htmlspecialchars($_SESSION['mensagem']); 
+            unset($_SESSION['mensagem']);
+            unset($_SESSION['tipo_mensagem']);
+            ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <?php endif; ?>
+
         <!-- Card de Usuários -->
         <div class="card shadow">
             <div class="card-header bg-primary text-white">
@@ -220,13 +264,15 @@ $link->close();
                                 <th>Email</th>
                                 <th>Sexo</th>
                                 <th>Nível</th>
+                                <th>Status</th>
                                 <th>Data Cadastro</th>
+                                <th class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (count($usuarios) > 0): ?>
                             <?php foreach ($usuarios as $usuario): ?>
-                            <tr>
+                            <tr class="<?php echo $usuario['bloqueado'] ? 'table-danger' : ''; ?>">
                                 <td><strong>#<?php echo $usuario['id']; ?></strong></td>
                                 <td>
                                     <i class="fas fa-user-circle me-2 text-primary"></i>
@@ -258,14 +304,50 @@ $link->close();
                                     <?php endif; ?>
                                 </td>
                                 <td>
+                                    <?php if ($usuario['bloqueado']): ?>
+                                    <span class="badge bg-danger"
+                                        title="<?php echo htmlspecialchars($usuario['motivo_bloqueio'] ?? 'Bloqueado'); ?>">
+                                        <i class="fas fa-ban me-1"></i>Bloqueado
+                                    </span>
+                                    <?php else: ?>
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check-circle me-1"></i>Ativo
+                                    </span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
                                     <i class="fas fa-calendar me-1 text-muted"></i>
                                     <?php echo date('d/m/Y H:i', strtotime($usuario['data_cadastro'])); ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php if ($usuario['id'] != $_SESSION['usuario']): ?>
+                                    <button type="button" class="btn btn-sm btn-info me-1"
+                                        onclick="verAuditoria(<?php echo $usuario['id']; ?>, '<?php echo htmlspecialchars($usuario['nome'] . ' ' . $usuario['sobrenome']); ?>')"
+                                        title="Ver Histórico de Acessos">
+                                        <i class="fas fa-history"></i>
+                                    </button>
+                                    <?php if (!$usuario['bloqueado']): ?>
+                                    <button type="button" class="btn btn-sm btn-warning"
+                                        onclick="bloquearUsuario(<?php echo $usuario['id']; ?>, '<?php echo htmlspecialchars($usuario['nome'] . ' ' . $usuario['sobrenome']); ?>')"
+                                        title="Bloquear Usuário">
+                                        <i class="fas fa-ban"></i>
+                                    </button>
+                                    <?php else: ?>
+                                    <button type="button" class="btn btn-sm btn-success"
+                                        onclick="desbloquearUsuario(<?php echo $usuario['id']; ?>, '<?php echo htmlspecialchars($usuario['nome'] . ' ' . $usuario['sobrenome']); ?>')"
+                                        title="Desbloquear Usuário">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <?php endif; ?>
+                                    <?php else: ?>
+                                    <span class="badge bg-secondary">Você</span>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
                             <?php else: ?>
                             <tr>
-                                <td colspan="6" class="text-center text-muted py-4">
+                                <td colspan="8" class="text-center text-muted py-4">
                                     <i class="fas fa-users fa-3x mb-3 d-block"></i>
                                     Nenhum usuário encontrado.
                                 </td>
@@ -314,10 +396,127 @@ $link->close();
         </div>
     </div>
 
+    <!-- Modal de Bloqueio -->
+    <div class="modal fade" id="modalBloquear" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">
+                        <i class="fas fa-ban me-2"></i>Bloquear Usuário
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST" action="">
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja bloquear o usuário <strong id="nomeUsuarioBloquear"></strong>?</p>
+                        <div class="mb-3">
+                            <label for="motivoBloqueio" class="form-label">Motivo do bloqueio:</label>
+                            <textarea class="form-control" id="motivoBloqueio" name="motivo" rows="3"
+                                placeholder="Descreva o motivo do bloqueio..." required></textarea>
+                        </div>
+                        <input type="hidden" name="acao" value="bloquear">
+                        <input type="hidden" name="usuario_id" id="usuarioIdBloquear">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-ban me-1"></i>Bloquear
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Desbloqueio -->
+    <div class="modal fade" id="modalDesbloquear" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-check-circle me-2"></i>Desbloquear Usuário
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST" action="">
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja desbloquear o usuário <strong id="nomeUsuarioDesbloquear"></strong>?
+                        </p>
+                        <input type="hidden" name="acao" value="desbloquear">
+                        <input type="hidden" name="usuario_id" id="usuarioIdDesbloquear">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check me-1"></i>Desbloquear
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Auditoria -->
+    <div class="modal fade" id="modalAuditoria" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-history me-2"></i>Histórico de Acessos - <span
+                            id="nomeUsuarioAuditoria"></span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="conteudoAuditoria">
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- JavaScript Customizado -->
     <script src="../js/validation.js"></script>
+    <script>
+    function bloquearUsuario(id, nome) {
+        document.getElementById('usuarioIdBloquear').value = id;
+        document.getElementById('nomeUsuarioBloquear').textContent = nome;
+        new bootstrap.Modal(document.getElementById('modalBloquear')).show();
+    }
+
+    function desbloquearUsuario(id, nome) {
+        document.getElementById('usuarioIdDesbloquear').value = id;
+        document.getElementById('nomeUsuarioDesbloquear').textContent = nome;
+        new bootstrap.Modal(document.getElementById('modalDesbloquear')).show();
+    }
+
+    function verAuditoria(id, nome) {
+        document.getElementById('nomeUsuarioAuditoria').textContent = nome;
+        const modal = new bootstrap.Modal(document.getElementById('modalAuditoria'));
+        modal.show();
+
+        // Carrega os dados de auditoria via AJAX
+        fetch('auditoria_ajax.php?usuario_id=' + id)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('conteudoAuditoria').innerHTML = data;
+            })
+            .catch(error => {
+                document.getElementById('conteudoAuditoria').innerHTML =
+                    '<div class="alert alert-danger"><i class="fas fa-exclamation-circle me-2"></i>Erro ao carregar dados.</div>';
+            });
+    }
+    </script>
 </body>
 
 </html>
