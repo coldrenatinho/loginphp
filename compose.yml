@@ -49,7 +49,7 @@ services:
       MYSQL_ROOT_PASSWORD: rootpassword
       PMA_USER: root
       PMA_PASSWORD: rootpassword
-      PMA_ABSOLUTE_URI: http://localhost:8080/phpmyadmin/
+      PMA_ABSOLUTE_URI: http://localhost:80/phpmyadmin/
       # Variables for phpMyAdmin configuration storage
       PMA_PMADB: phpmyadmin
       PMA_CONTROLUSER: pma
