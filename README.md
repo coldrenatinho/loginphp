@@ -1,4 +1,211 @@
-# Sistema de Login com PHP, Nginx e MySQL em Ambiente Docker
+# Sistema de Login em PHP com Docker
+
+Este é um projeto completo de sistema de login desenvolvido em PHP, utilizando Bootstrap 5, JavaScript, CSS customizado, Nginx como servidor web e MySQL como banco de dados. Todo o ambiente é orquestrado com Docker e Docker Compose.
+
+## 🚀 Funcionalidades
+
+-   ✅ **Cadastro de Usuários**: Formulário completo com validações client-side e server-side
+-   ✅ **Login de Usuários**: Autenticação segura com gerenciamento de sessões
+-   ✅ **Recuperação de Senha**: Sistema de redefinição de senha
+-   ✅ **Dashboard Administrativo**: Área protegida com informações do usuário
+-   🔐 **Segurança**: Senhas criptografadas com `password_hash()` e `password_verify()`
+-   📱 **Design Responsivo**: Interface moderna com Bootstrap 5
+-   ⚡ **Validações em Tempo Real**: JavaScript para feedback instantâneo
+-   🐳 **Ambiente Containerizado**: Fácil de configurar e rodar com Docker
+
+## 💻 Tecnologias Utilizadas
+
+### Frontend
+-   **HTML5**: Estrutura semântica
+-   **CSS3**: Estilos customizados com variáveis CSS
+-   **Bootstrap 5.3**: Framework CSS responsivo
+-   **JavaScript (Vanilla)**: Validações e interatividade
+-   **Font Awesome 6.4**: Ícones
+-   **Google Fonts (Nunito)**: Tipografia moderna
+
+### Backend
+-   **PHP 8.x**: Lógica de servidor
+-   **MySQL 8.0**: Banco de dados relacional
+-   **Nginx**: Servidor web
+-   **Docker & Docker Compose**: Containerização
+
+## 📋 Pré-requisitos
+
+Para executar este projeto, você precisará ter instalado em sua máquina:
+
+-   [Docker](https://www.docker.com/get-started)
+-   [Docker Compose](https://docs.docker.com/compose/install/)
+
+## 🔧 Como Executar o Projeto
+
+Siga os passos abaixo para configurar e iniciar o ambiente de desenvolvimento.
+
+1.  **Clone o Repositório**
+    ```bash
+    git clone https://github.com/coldrenatinho/loginphp.git
+    cd loginphp
+    ```
+
+2.  **Inicie os Contêineres**
+    Execute o comando abaixo na raiz do projeto para construir e iniciar os serviços:
+    ```bash
+    docker-compose up -d
+    ```
+    O comando `-d` (detached) executa os contêineres em segundo plano.
+
+3.  **Acesse a Aplicação**
+    Após os contêineres estarem em execução, acesse no navegador:
+    -   **Página Inicial**: [http://localhost/](http://localhost/)
+    -   **Login**: [http://localhost/login](http://localhost/login)
+    -   **Cadastro**: [http://localhost/cadastro](http://localhost/cadastro)
+    -   **Recuperar Senha**: [http://localhost/esqueceuasenha](http://localhost/esqueceuasenha)
+
+## 🔑 Credenciais de Teste
+
+O sistema vem com usuários pré-cadastrados para teste:
+
+**Administrador:**
+- Email: `admin@admin.com`
+- Senha: `admin123`
+
+**Usuário Regular:**
+- Email: `user@user.com`
+- Senha: `user123`
+
+## 🗄️ Gerenciamento do Banco de Dados
+
+O projeto inclui **phpMyAdmin** para gerenciamento visual do banco de dados.
+
+-   **URL**: [http://localhost:8080](http://localhost:8080)
+-   **Servidor**: `db`
+-   **Usuário**: `root`
+-   **Senha**: `rootpassword`
+
+## 📁 Estrutura do Projeto
+
+```
+.
+├── compose.yml                    # Docker Compose configuration
+├── Dockerfile                     # PHP Docker image
+├── nginx.conf                     # Nginx configuration
+├── README.md                      # Este arquivo
+├── DOCUMENTACAO_TECNICA.md       # Documentação técnica completa
+├── scripts/                       # SQL scripts
+│   ├── create-phpmyadmin-db.sql
+│   └── create-table-login.sql
+└── src/
+    ├── css/
+    │   └── style.css             # Estilos customizados
+    ├── js/
+    │   └── validation.js         # Validações JavaScript
+    └── php/                      # Código-fonte PHP
+        ├── admin.php             # Dashboard (protegido)
+        ├── cadastro.php          # Página de cadastro
+        ├── config.php            # Configuração do banco
+        ├── esqueceuasenha.php    # Recuperação de senha
+        ├── index.php             # Página inicial
+        ├── login.php             # Página de login
+        ├── logout.php            # Logout
+        └── protect.php           # Proteção de páginas
+```
+
+## 🔒 Recursos de Segurança
+
+-   ✅ **Prepared Statements**: Proteção contra SQL Injection
+-   ✅ **Password Hashing**: Senhas criptografadas com `password_hash()`
+-   ✅ **Validações Duplas**: Client-side (JavaScript) e Server-side (PHP)
+-   ✅ **Sanitização de Inputs**: Proteção contra XSS
+-   ✅ **Sessões Seguras**: Gerenciamento adequado de sessões
+-   ✅ **Índices no Banco**: Otimização de consultas
+
+## 📊 Funcionalidades Detalhadas
+
+### Página de Cadastro
+- Campos: Nome, Sobrenome, Email, Sexo, Senha, Confirmar Senha
+- Validação de formato de email
+- Verificação de senha forte (indicador visual)
+- Confirmação de senha
+- Verificação de email duplicado
+- Feedback visual em tempo real
+
+### Página de Login
+- Autenticação com email e senha
+- Verificação com `password_verify()`
+- Criação de sessão segura
+- Redirecionamento para área administrativa
+- Link para recuperação de senha
+
+### Dashboard Administrativo
+- Acesso restrito (apenas usuários autenticados)
+- Informações do perfil
+- Estatísticas do sistema
+- Cards informativos
+- Menu de navegação
+- Logout seguro
+
+### Recuperação de Senha
+- Validação de email
+- Geração de senha temporária
+- Atualização segura no banco de dados
+- Feedback ao usuário
+
+## 🛠️ Comandos Úteis
+
+**Iniciar o projeto:**
+```bash
+docker-compose up -d
+```
+
+**Parar o projeto:**
+```bash
+docker-compose down
+```
+
+**Ver logs:**
+```bash
+docker-compose logs -f
+```
+
+**Reiniciar serviços:**
+```bash
+docker-compose restart
+```
+
+**Acessar container PHP:**
+```bash
+docker-compose exec php bash
+```
+
+## 📖 Documentação Adicional
+
+Para informações técnicas detalhadas, consulte:
+- [DOCUMENTACAO_TECNICA.md](./DOCUMENTACAO_TECNICA.md) - Documentação técnica completa do projeto
+
+## 🎓 Sobre o Projeto
+
+Este projeto foi desenvolvido como trabalho acadêmico para demonstrar:
+- Desenvolvimento Web Full Stack
+- PHP e MySQL
+- Segurança em Aplicações Web
+- Design Responsivo com Bootstrap
+- Boas Práticas de Programação
+- Uso de Docker para desenvolvimento
+
+**Referência:** Jon Duckett - Capítulo 16
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 👨‍💻 Autor
+
+Desenvolvido por [Renato](https://github.com/coldrenatinho)
+
+---
+
+**Data de Entrega:** 25/11/2025
+
+
 
 ![PHP](https://img.shields.io/badge/PHP-8.2-blue?style=for-the-badge&logo=php)
 ![Nginx](https://img.shields.io/badge/Nginx-alpine-green?style=for-the-badge&logo=nginx)
