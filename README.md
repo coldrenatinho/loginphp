@@ -8,6 +8,10 @@ Este é um projeto completo de sistema de login desenvolvido em PHP, utilizando 
 -   ✅ **Login de Usuários**: Autenticação segura com gerenciamento de sessões
 -   ✅ **Recuperação de Senha**: Sistema de redefinição de senha
 -   ✅ **Dashboard Administrativo**: Área protegida com informações do usuário
+-   ✅ **Gerenciamento de Usuários**: Interface para administradores
+-   ✅ **Bloqueio de Usuários**: Admins podem bloquear/desbloquear usuários
+-   ✅ **Auditoria de Login**: Registro automático de IP, navegador, SO e dispositivo
+-   ✅ **Histórico de Acessos**: Visualização dos últimos 50 acessos de cada usuário
 -   🔐 **Segurança**: Senhas criptografadas com `password_hash()` e `password_verify()`
 -   📱 **Design Responsivo**: Interface moderna com Bootstrap 5
 -   ⚡ **Validações em Tempo Real**: JavaScript para feedback instantâneo
