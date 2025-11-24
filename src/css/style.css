@@ -247,6 +247,19 @@ a:hover {
     border-left-color: var(--danger-color);
 }
 
+.clickable-card {
+    cursor: pointer;
+}
+
+.clickable-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2) !important;
+}
+
+.clickable-card:active {
+    transform: translateY(-3px);
+}
+
 /* =====================================================
    Tabelas
    ===================================================== */
@@ -402,11 +415,22 @@ a:hover {
 
 .list-group-item:hover {
     background-color: var(--light-color);
+    transform: translateX(5px);
+    border-left: 3px solid var(--primary-color);
 }
 
 .list-group-item.active {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
+}
+
+.list-group-item-action:hover .fa-chevron-right {
+    transform: translateX(5px);
+}
+
+.list-group-item small {
+    display: block;
+    margin-top: 0.25rem;
 }
 
 /* =====================================================

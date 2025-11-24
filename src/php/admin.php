@@ -108,83 +108,91 @@ $link->close();
                 <!-- Cards de Estatísticas -->
                 <div class="row mb-4">
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card dashboard-card success shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Total de Usuários
+                        <a href="<?php echo ($nivel_acesso === 'admin') ? 'usuarios.php' : '#'; ?>" class="text-decoration-none">
+                            <div class="card dashboard-card success shadow h-100 py-2 <?php echo ($nivel_acesso === 'admin') ? 'clickable-card' : ''; ?>">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Total de Usuários
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $total_usuarios; ?>
+                                            </div>
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <?php echo $total_usuarios; ?>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
                                         </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-users fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card dashboard-card shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Nível de Acesso
+                        <a href="perfil.php" class="text-decoration-none">
+                            <div class="card dashboard-card shadow h-100 py-2 clickable-card">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Nível de Acesso
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo ucfirst($nivel_acesso); ?>
+                                            </div>
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <?php echo ucfirst($nivel_acesso); ?>
+                                        <div class="col-auto">
+                                            <i class="fas fa-shield-alt fa-2x text-gray-300"></i>
                                         </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-shield-alt fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card dashboard-card warning shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            Status
+                        <a href="perfil.php" class="text-decoration-none">
+                            <div class="card dashboard-card warning shadow h-100 py-2 clickable-card">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Status
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                Ativo
+                                            </div>
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            Ativo
+                                        <div class="col-auto">
+                                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
                                         </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card dashboard-card danger shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                            Segurança
+                        <a href="alterar_senha.php" class="text-decoration-none">
+                            <div class="card dashboard-card danger shadow h-100 py-2 clickable-card">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                                Segurança
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                Alta
+                                            </div>
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            Alta
+                                        <div class="col-auto">
+                                            <i class="fas fa-lock fa-2x text-gray-300"></i>
                                         </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-lock fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
@@ -227,17 +235,57 @@ $link->close();
                             </div>
                             <div class="card-body">
                                 <div class="list-group">
-                                    <a href="#" class="list-group-item list-group-item-action">
-                                        <i class="fas fa-user-edit me-2"></i>Editar Perfil
+                                    <a href="perfil.php" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                            <div>
+                                                <i class="fas fa-user-edit me-2 text-primary"></i>
+                                                <strong>Editar Perfil</strong>
+                                            </div>
+                                            <i class="fas fa-chevron-right text-muted"></i>
+                                        </div>
+                                        <small class="text-muted">Atualize suas informações pessoais</small>
                                     </a>
-                                    <a href="#" class="list-group-item list-group-item-action">
-                                        <i class="fas fa-key me-2"></i>Alterar Senha
+                                    <a href="alterar_senha.php" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                            <div>
+                                                <i class="fas fa-key me-2 text-warning"></i>
+                                                <strong>Alterar Senha</strong>
+                                            </div>
+                                            <i class="fas fa-chevron-right text-muted"></i>
+                                        </div>
+                                        <small class="text-muted">Mantenha sua conta segura</small>
                                     </a>
-                                    <a href="#" class="list-group-item list-group-item-action">
-                                        <i class="fas fa-cog me-2"></i>Configurações
+                                    <?php if ($nivel_acesso === 'admin'): ?>
+                                    <a href="usuarios.php" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                            <div>
+                                                <i class="fas fa-users me-2 text-success"></i>
+                                                <strong>Gerenciar Usuários</strong>
+                                            </div>
+                                            <i class="fas fa-chevron-right text-muted"></i>
+                                        </div>
+                                        <small class="text-muted">Visualize e gerencie todos os usuários</small>
+                                    </a>
+                                    <?php endif; ?>
+                                    <a href="sobre.php" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                            <div>
+                                                <i class="fas fa-info-circle me-2 text-info"></i>
+                                                <strong>Sobre o Sistema</strong>
+                                            </div>
+                                            <i class="fas fa-chevron-right text-muted"></i>
+                                        </div>
+                                        <small class="text-muted">Informações e documentação</small>
                                     </a>
                                     <a href="logout.php" class="list-group-item list-group-item-action text-danger" onclick="return confirmLogout(event)">
-                                        <i class="fas fa-sign-out-alt me-2"></i>Sair do Sistema
+                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                            <div>
+                                                <i class="fas fa-sign-out-alt me-2"></i>
+                                                <strong>Sair do Sistema</strong>
+                                            </div>
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                        <small>Encerrar sessão com segurança</small>
                                     </a>
                                 </div>
                             </div>
@@ -247,6 +295,29 @@ $link->close();
             </main>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-4 py-3 bg-light">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-muted">
+                        <small>&copy; <?php echo date('Y'); ?> Sistema de Login PHP. Todos os direitos reservados.</small>
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        <small class="text-muted">
+                            <a href="sobre.php" class="text-decoration-none">Sobre</a> | 
+                            <a href="https://github.com/coldrenatinho/loginphp" target="_blank" class="text-decoration-none">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
