@@ -61,11 +61,12 @@ $link->close();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar Senha - Sistema de Login</title>
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -75,6 +76,7 @@ $link->close();
     <!-- CSS Customizado -->
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <div class="auth-container">
         <div class="card fade-in">
@@ -84,25 +86,25 @@ $link->close();
             <div class="card-body">
                 <!-- Exibição de Mensagens de Erro -->
                 <?php if (count($erro) > 0): ?>
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fas fa-exclamation-circle me-2"></i>
-                        <strong>Erro!</strong>
-                        <ul class="mb-0 mt-2">
-                            <?php foreach ($erro as $msg): ?>
-                                <li><?php echo htmlspecialchars($msg); ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>Erro!</strong>
+                    <ul class="mb-0 mt-2">
+                        <?php foreach ($erro as $msg): ?>
+                        <li><?php echo htmlspecialchars($msg); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
                 <?php endif; ?>
 
                 <!-- Exibição de Mensagem de Sucesso -->
                 <?php if (!empty($sucesso)): ?>
-                    <div class="alert alert-success alert-dismissible fade show alert-permanent" role="alert">
-                        <i class="fas fa-check-circle me-2"></i>
-                        <?php echo $sucesso; ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
+                <div class="alert alert-success alert-dismissible fade show alert-permanent" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <?php echo $sucesso; ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
                 <?php endif; ?>
 
                 <?php if (empty($sucesso)): ?>
@@ -118,9 +120,9 @@ $link->close();
                         <label for="email" class="form-label">
                             <i class="fas fa-envelope me-1"></i>Email
                         </label>
-                        <input type="email" class="form-control" id="email" name="email" 
-                               value="<?php echo htmlspecialchars($email); ?>" 
-                               placeholder="seuemail@exemplo.com" required autofocus>
+                        <input type="email" class="form-control" id="email" name="email"
+                            value="<?php echo htmlspecialchars($email); ?>" placeholder="seuemail@exemplo.com" required
+                            autofocus>
                         <div class="invalid-feedback">Por favor, insira um email válido.</div>
                     </div>
 
@@ -158,4 +160,5 @@ $link->close();
     <!-- JavaScript Customizado -->
     <script src="../js/validation.js"></script>
 </body>
+
 </html>

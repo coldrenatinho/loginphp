@@ -3,13 +3,6 @@
 -- Adiciona campos para auditoria de login e bloqueio
 -- =====================================================
 
-USE login;
-
--- Adiciona novas colunas à tabela usuarios
-ALTER TABLE usuarios
-ADD COLUMN bloqueado TINYINT(1) DEFAULT 0 COMMENT 'Usuário bloqueado (0=Não, 1=Sim)' AFTER nivel_acesso,
-ADD COLUMN motivo_bloqueio TEXT NULL COMMENT 'Motivo do bloqueio do usuário' AFTER bloqueado;
-
 -- Cria tabela de auditoria de login
 CREATE TABLE IF NOT EXISTS auditoria_login (
     id INT AUTO_INCREMENT PRIMARY KEY,
