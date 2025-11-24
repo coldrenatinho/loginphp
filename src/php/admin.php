@@ -62,10 +62,13 @@ $link->close();
                             <i class="fas fa-user-circle me-1"></i><?php echo htmlspecialchars($nome); ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Perfil</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configurações</a></li>
+                            <li><a class="dropdown-item" href="perfil.php"><i class="fas fa-user me-2"></i>Perfil</a></li>
+                            <li><a class="dropdown-item" href="alterar_senha.php"><i class="fas fa-key me-2"></i>Alterar Senha</a></li>
+                            <?php if ($_SESSION['nivel_acesso'] === 'admin'): ?>
+                            <li><a class="dropdown-item" href="usuarios.php"><i class="fas fa-users me-2"></i>Usuários</a></li>
+                            <?php endif; ?>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="logout.php" onclick="return confirmLogout(event)">
+                            <li><a class="dropdown-item text-danger" href="logout.php" onclick="return confirmLogout(event)">
                                 <i class="fas fa-sign-out-alt me-2"></i>Sair
                             </a></li>
                         </ul>
