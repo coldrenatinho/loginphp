@@ -150,6 +150,7 @@ $link->close();
                     <!-- Link para Cadastro -->
                     <div class="text-center">
                         <p class="mb-0">Não tem uma conta? <a href="cadastro.php">Cadastre-se aqui</a></p>
+                        <p class="mb-0 mt-2"><a href="sobre.php">Sobre o Sistema</a></p>
                     </div>
                 </form>
             </div>

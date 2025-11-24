@@ -327,3 +327,182 @@ a:hover {
     border-radius: 0.5rem;
     box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
 }
+
+/* =====================================================
+   Breadcrumbs
+   ===================================================== */
+.breadcrumb {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.breadcrumb-item a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #224abe;
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: var(--secondary-color);
+}
+
+/* =====================================================
+   Paginação
+   ===================================================== */
+.pagination .page-link {
+    color: var(--primary-color);
+    border-color: #d1d3e2;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    background-color: var(--light-color);
+    border-color: var(--primary-color);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.pagination .page-item.disabled .page-link {
+    color: var(--secondary-color);
+}
+
+/* =====================================================
+   Badges Personalizados
+   ===================================================== */
+.badge {
+    font-weight: 600;
+    padding: 0.5em 0.75em;
+}
+
+/* =====================================================
+   Input Groups
+   ===================================================== */
+.input-group-text {
+    background-color: var(--light-color);
+    border-color: #d1d3e2;
+    color: var(--dark-color);
+}
+
+/* =====================================================
+   List Groups
+   ===================================================== */
+.list-group-item {
+    border-color: #e3e6f0;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: var(--light-color);
+}
+
+.list-group-item.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* =====================================================
+   Utilitários Adicionais
+   ===================================================== */
+.text-gray-800 {
+    color: #5a5c69 !important;
+}
+
+.text-gray-300 {
+    color: #dddfeb !important;
+}
+
+.text-purple {
+    color: #6f42c1 !important;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%);
+}
+
+/* =====================================================
+   Cards Aprimorados
+   ===================================================== */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover:not(.no-hover) {
+    transform: translateY(-5px);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.card-header {
+    font-weight: 600;
+}
+
+/* =====================================================
+   Sombras Customizadas
+   ===================================================== */
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.shadow {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+/* =====================================================
+   Scroll Suave
+   ===================================================== */
+html {
+    scroll-behavior: smooth;
+}
+
+/* =====================================================
+   Tooltips e Popovers (se usados)
+   ===================================================== */
+.tooltip {
+    font-size: 0.875rem;
+}
+
+/* =====================================================
+   Overlay para Modais
+   ===================================================== */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* =====================================================
+   Botões Adicionais
+   ===================================================== */
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* =====================================================
+   Progress Bars (para uso futuro)
+   ===================================================== */
+.progress {
+    height: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--light-color);
+}
+
+.progress-bar {
+    background-color: var(--primary-color);
+}
+
